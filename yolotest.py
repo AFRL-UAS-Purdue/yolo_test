@@ -70,6 +70,7 @@ class yolo_tester:
         detect(rgb_array)
 
     def detect(img):
+        
         # Initialize
         set_logging()
         device = select_device(opt.device)
