@@ -93,7 +93,7 @@ class yolo_tester:
             image = bridge.imgmsg_to_cv2(data, desired_encoding="bgr8")
         except CvBridgeError as e:
             rospy.logerr(e)
-        self.rgb_array = np.array(image,dtype=np.uint8)
+        self.rgb_array = np.array(image, dtype=np.uint8)
 
         detect(rgb_array)
 
@@ -103,6 +103,7 @@ class yolo_tester:
         device = self.device
         img = letterbox(img, self.img_size, stride=self.stride)[0]
         img0 = img[:, :, ::-1].transpose(2, 0, 1)
+        img0 = np.ascontiguousarray(img0)
 
         # Load model
         model = self.model# load FP32 model
@@ -232,7 +233,7 @@ def main():
   # yolo_tester()
   detector = yolo_tester(classes=[0])
   detector.load_model('./weights/yolov7x.pt', ) # Put Pretrained model here.
-  result = detector.detect(realsensecam, plot_bb=True) # realsensecam is the pic pass from ros
+  result = detector.detect(detector.image_sub, plot_bb=True) # the pic pass from ros
 
   # output result then
   try:
