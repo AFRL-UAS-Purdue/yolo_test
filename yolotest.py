@@ -40,6 +40,7 @@ from utils.general import check_img_size, check_requirements, check_imshow, non_
 from utils.plots import plot_one_box
 from utils.torch_utils import select_device, load_classifier, time_synchronized, TracedModel
 
+
 class yolo_tester:
 
   def __init__(self):
@@ -228,8 +229,12 @@ class yolo_tester:
         return img, ratio, (dw, dh)
       
 def main():
-  yolo_tester()
-  
+  # yolo_tester()
+  detector = yolo_tester(classes=[0])
+  detector.load_model('./weights/yolov7x.pt', ) # Put Pretrained model here.
+  result = detector.detect(realsensecam, plot_bb=True) # realsensecam is the pic pass from ros
+
+  # output result then
   try:
     rospy.spin()
   except KeyboardInterrupt:
